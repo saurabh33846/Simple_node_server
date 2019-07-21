@@ -122,10 +122,17 @@ req.on('end', function(){
 
 // Define the handlers
 var handlers={}
-handlers.sample = function(data, callback){
-    //callback a http status code, and a payload object
-    callback(406, {'name':'sample handler'});
-};
+
+// // Simple handler
+// handlers.sample = function(data, callback){
+//     //callback a http status code, and a payload object
+//     callback(406, {'name':'sample handler'});
+// };
+
+// Ping handler
+handlers.ping = function(data, callback){
+    callback(200);
+}
 
 handlers.notFound = function(data,callback){
 callback(404);
@@ -134,5 +141,6 @@ callback(404);
 //Define a request router
 
 var router ={
-    'sample':handlers.sample
+    'sample':handlers.sample,
+    'ping':handlers.ping
 }
