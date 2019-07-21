@@ -7,6 +7,7 @@ const https = require('https');
 var url = require('url');
 var stringDecoder = require('string_decoder').StringDecoder;
 var config = require('./config');
+var fs = require('fs');
 
 
 // The server should respond to all request with string
@@ -24,12 +25,16 @@ httpServer.listen(config.httpPort, function(){
 
 
 // Instantiating the HTTPS server
-var httpServer = http.createServer(function(req, res){
+var httpsServerOptions = {
+    'key':fs.readFileSync('./https/key.pem','utf8').toString(),
+    'cert':fs.readFileSync('./https/cert.pem','utf8').toString()
+};
+var httpsServer = https.createServer(httpsServerOptions,function(req, res){
     unifiedServer(req,res);
 });
 
-// Starting https server
-httpServer.listen(config.httpsPort, function(){
+// Starting htt ps server
+httpsServer.listen(config.httpsPort, function(){
     console.log(`Server started on port ${config.httpsPort} in environment ${config.envName}`)
 })
 
